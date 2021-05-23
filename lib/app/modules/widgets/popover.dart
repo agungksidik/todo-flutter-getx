@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class Popover extends StatelessWidget {
   const Popover({
-    Key? key,
-    required this.child,
+    Key key,
+    this.child,
   }) : super(key: key);
 
   final Widget child;

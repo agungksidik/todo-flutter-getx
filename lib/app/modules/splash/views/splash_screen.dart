@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_app/app/data/utils/constants.dart';
+import 'package:todo_app/app/modules/widgets/illustration_page.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -12,7 +13,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   void startTimer() async {
     Timer(Duration(seconds: 2), () {
-      Get.toNamed("/home");
+      Get.offAndToNamed("/home");
     });
   }
 
@@ -25,23 +26,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "LABKITA",
-                style: GoogleFonts.poppins(
-                  fontSize: 20.0,
-                  // fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text("WELCOME TO"),
-            ],
-          ),
-        ],
+      backgroundColor: whiteColor,
+      body: Center(
+        child: IllustrationPage(
+          title: 'Todo App',
+          subtitle: ' Agung Sidik M',
+          picturePath: 'assets/images/logo.png',
+        ),
       ),
     );
   }

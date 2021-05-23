@@ -18,7 +18,8 @@ class ApiProvider extends GetConnect {
   }
 
   Future<Response> getToDo() async {
-    httpClient.baseUrl = 'https://jsonplaceholder.typicode.com/';
+    httpClient.baseUrl =
+        'https://my-json-server.typicode.com/agungksidik/todo_json/';
     Response res = await get(
       "todos",
     );
