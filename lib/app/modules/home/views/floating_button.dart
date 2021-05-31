@@ -114,14 +114,10 @@ class FloatingButton extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: () {
                                 if (_formKey.currentState.validate()) {
-                                  _controller.todos.add(
-                                      TodoResponse(name: nameController.text));
                                   _controller.todos.add(TodoResponse(
-                                      category: categoryController.text));
-                                  _controller.todos.add(
-                                      TodoResponse(time: timeController.text));
-                                  _controller.todos
-                                      .add(TodoResponse(isComplete: false));
+                                      name: nameController.text,
+                                      category: categoryController.text,
+                                      time: timeController.text));
                                   Get.snackbar(
                                     'Task Berhasil di buat',
                                     'Create task success!',

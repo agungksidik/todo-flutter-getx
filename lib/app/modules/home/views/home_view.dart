@@ -65,44 +65,27 @@ class _HomeViewState extends State<HomeView> {
                       SizedBox(
                         height: 9,
                       ),
-                      Obx(
-                        () => Container(
-                          height: 170,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: [
-                              Category(
-                                name: 'Work',
-                                taskCount:
-                                    (_controller.workCategory.length == 0)
-                                        ? 'Loading Data...'
-                                        : _controller.workCategory.length
-                                                .toString() +
-                                            ' Task',
-                                image: 'assets/images/category_work.png',
-                              ),
-                              Category(
-                                name: 'Personal',
-                                taskCount:
-                                    (_controller.personalCategory.length == 0)
-                                        ? 'Loading Data...'
-                                        : _controller.personalCategory.length
-                                                .toString() +
-                                            ' Task',
-                                image: 'assets/images/category_personal.png',
-                              ),
-                              Category(
-                                name: 'Other',
-                                taskCount:
-                                    (_controller.otherCategory.length == 0)
-                                        ? 'Loading Data...'
-                                        : _controller.otherCategory.length
-                                                .toString() +
-                                            ' Task',
-                                image: 'assets/images/category_other.png',
-                              ),
-                            ],
-                          ),
+                      Container(
+                        height: 170,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            Category(
+                              name: 'Work',
+                              taskCount: ' Task',
+                              image: 'assets/images/category_work.png',
+                            ),
+                            Category(
+                              name: 'Personal',
+                              taskCount: ' Task',
+                              image: 'assets/images/category_personal.png',
+                            ),
+                            Category(
+                              name: 'Other',
+                              taskCount: ' Task',
+                              image: 'assets/images/category_other.png',
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(
@@ -125,12 +108,12 @@ class _HomeViewState extends State<HomeView> {
                         height: 9,
                       ),
                       Obx(() {
-                        return (_controller.onGoingTask.length == 0)
+                        return (_controller.todos.length == 0)
                             ? Text('Loading Data...')
                             : ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
-                                itemCount: _controller.onGoingTask.length,
+                                itemCount: _controller.todos.length,
                                 itemBuilder: (context, index) {
                                   return Stack(
                                     children: [
@@ -146,13 +129,11 @@ class _HomeViewState extends State<HomeView> {
                                           gradient: new LinearGradient(
                                               colors: [
                                                 Color(0xFFF8F8F8),
-                                                (_controller.onGoingTask[index]
+                                                (_controller.todos[index]
                                                             .category ==
                                                         'Personal')
                                                     ? Color(0xFF28B5B5)
-                                                    : (_controller
-                                                                .onGoingTask[
-                                                                    index]
+                                                    : (_controller.todos[index]
                                                                 .category ==
                                                             'Work')
                                                         ? Color(0xFFFF9A8C)
@@ -184,19 +165,17 @@ class _HomeViewState extends State<HomeView> {
                                                   width: size.width * 0.6,
                                                   child: Text(
                                                     _controller
-                                                        .onGoingTask[index]
-                                                        .name,
+                                                        .todos[index].name,
                                                     style: GoogleFonts.poppins(
                                                       fontWeight:
                                                           FontWeight.w600,
                                                       color: (_controller
-                                                                  .onGoingTask[
-                                                                      index]
+                                                                  .todos[index]
                                                                   .category ==
                                                               'Personal')
                                                           ? Color(0xFF28B5B5)
                                                           : (_controller
-                                                                      .onGoingTask[
+                                                                      .todos[
                                                                           index]
                                                                       .category ==
                                                                   'Work')
@@ -211,8 +190,7 @@ class _HomeViewState extends State<HomeView> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  _controller
-                                                      .onGoingTask[index].time,
+                                                  _controller.todos[index].time,
                                                   style: greyTextStyle,
                                                 ),
                                               ],
@@ -254,11 +232,11 @@ class _HomeViewState extends State<HomeView> {
                                       Image.asset(
                                         'assets/images/task_side.png',
                                         height: 75,
-                                        color: (_controller.onGoingTask[index]
-                                                    .category ==
+                                        color: (_controller
+                                                    .todos[index].category ==
                                                 'Personal')
                                             ? Color(0xFF28B5B5)
-                                            : (_controller.onGoingTask[index]
+                                            : (_controller.todos[index]
                                                         .category ==
                                                     'Work')
                                                 ? Color(0xFFFF9A8C)
@@ -288,115 +266,6 @@ class _HomeViewState extends State<HomeView> {
                       SizedBox(
                         height: 9,
                       ),
-                      Obx(() {
-                        return (_controller.completeTask.length == 0)
-                            ? Text('Loading Data...')
-                            : ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: _controller.completeTask.length,
-                                itemBuilder: (context, index) {
-                                  return Stack(
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.only(
-                                          left: 40,
-                                          right: 16,
-                                        ),
-                                        margin: EdgeInsets.only(bottom: 15),
-                                        width: double.infinity,
-                                        height: 75,
-                                        decoration: BoxDecoration(
-                                          gradient: new LinearGradient(
-                                              colors: [
-                                                Color(0xFFF8F8F8),
-                                                Color(0xFFC4C4C4),
-                                              ],
-                                              begin: const FractionalOffset(
-                                                  0.0, 1.0),
-                                              end: const FractionalOffset(
-                                                  3.0, 0.0),
-                                              stops: [0.0, 1.0],
-                                              tileMode: TileMode.clamp),
-                                          color: Color(0xFFE1E5EA),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                SizedBox(
-                                                  width: size.width * 0.6,
-                                                  child: Text(
-                                                    _controller
-                                                        .completeTask[index]
-                                                        .name,
-                                                    style: GoogleFonts.poppins(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: Color(0xFFC4C4C4),
-                                                    ),
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    maxLines: 2,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  _controller
-                                                      .completeTask[index].time,
-                                                  style: greyTextStyle,
-                                                ),
-                                              ],
-                                            ),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                    color: Color(0xFFC4C4C4),
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(20),
-                                                  )),
-                                              width: 24,
-                                              height: 24,
-                                              child: Theme(
-                                                data: ThemeData(
-                                                  unselectedWidgetColor:
-                                                      Colors.transparent,
-                                                ),
-                                                child: Checkbox(
-                                                  activeColor:
-                                                      Colors.transparent,
-                                                  checkColor: Color(0xFFC4C4C4),
-                                                  value: true,
-                                                  tristate: false,
-                                                  onChanged: (value) {},
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Image.asset(
-                                        'assets/images/task_side.png',
-                                        height: 75,
-                                        color: Color(0xFFC4C4C4),
-                                      )
-                                    ],
-                                  );
-                                },
-                              );
-                      }),
                       SizedBox(
                         height: 13,
                       ),
